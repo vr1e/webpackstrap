@@ -2,6 +2,8 @@ const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+	.BundleAnalyzerPlugin;
 
 module.exports = {
 	mode: 'production',
@@ -13,8 +15,8 @@ module.exports = {
 				test: /\.(js|jsx)$/,
 				exclude: /node_modules/,
 				use: {
-					loader: 'babel-loader',
-				},
+					loader: 'babel-loader'
+				}
 			},
 			{
 				test: /\.html$/,
@@ -22,14 +24,18 @@ module.exports = {
 				use: [
 					{
 						loader: 'html-loader',
-						options: { minimize: true },
-					},
-				],
+						options: { minimize: true }
+					}
+				]
 			},
 			{
 				test: /\.css$/,
 				exclude: /node_modules/,
-				use: [MiniCssExtractPlugin.loader, 'css-loader'],
+				use: [MiniCssExtractPlugin.loader, 'css-loader']
+			},
+			{
+				test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
+				loaders: ['file-loader']
 			},
 			{
 				test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
@@ -40,32 +46,32 @@ module.exports = {
 						options: {
 							name: '[name].[ext]',
 							outputPath: 'fonts/',
-							publicPath: url => `../fonts/${url}`,
-						},
-					},
-				],
-			},
-		],
+							publicPath: url => `../fonts/${url}`
+						}
+					}
+				]
+			}
+		]
 	},
 	plugins: [
 		new CleanWebpackPlugin(['build']),
 		new HtmlWebPackPlugin({
-			template: './src/index.html',
-			filename: './index.html',
+			template: path.join(__dirname, 'src', 'index.html')
 		}),
 		new MiniCssExtractPlugin({
 			filename: '[contenthash].css',
-			chunkFilename: '[id].css',
+			chunkFilename: '[id].css'
 		}),
+		new BundleAnalyzerPlugin()
 	],
 	output: {
 		filename: '[contenthash].bundle.js',
 		path: path.resolve(__dirname, 'build'),
-		publicPath: '/',
+		publicPath: '/'
 	},
 	optimization: {
 		splitChunks: {
-			chunks: 'all',
-		},
-	},
+			chunks: 'all'
+		}
+	}
 };
