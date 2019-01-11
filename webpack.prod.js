@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const WebpackBar = require('webpackbar');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 	.BundleAnalyzerPlugin;
 
@@ -29,9 +30,8 @@ module.exports = {
 				]
 			},
 			{
-				test: /\.css$/,
-				exclude: /node_modules/,
-				use: [MiniCssExtractPlugin.loader, 'css-loader']
+				test: /\.(css|scss)$/,
+				use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
 			},
 			{
 				test: /\.(jpg|jpeg|png|gif|mp3|svg)$/,
@@ -62,6 +62,7 @@ module.exports = {
 			filename: '[contenthash].css',
 			chunkFilename: '[id].css'
 		}),
+		new WebpackBar(),
 		new BundleAnalyzerPlugin()
 	],
 	output: {
