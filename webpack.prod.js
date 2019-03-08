@@ -54,7 +54,7 @@ module.exports = {
 		]
 	},
 	plugins: [
-		new CleanWebpackPlugin(['build']),
+		new CleanWebpackPlugin(),
 		new HtmlWebPackPlugin({
 			template: path.join(__dirname, 'src', 'index.html')
 		}),
