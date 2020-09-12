@@ -5,7 +5,7 @@ import './index.scss';
 const App = () => {
 	return (
 		<div>
-			<h1>React boilerplate</h1>
+			<h1>React boilerplate 🦄</h1>
 		</div>
 	);
 };
